@@ -11,7 +11,8 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name}')
+    print(f'{bot.user.name} has connected to Discord!')
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="recent donations"))
 
 @bot.event
 async def on_message(message):
@@ -23,39 +24,39 @@ async def on_message(message):
     if message.channel.id != desired_channel_id:
         return
 
-    mentioned_users = message.mentions
-    if mentioned_users:
-        server = bot.get_guild(YOUR_SERVER_ID)
-        if server is not None:
-            role_to_give = discord.utils.get(server.roles, id=YOUR_ROLE_ID)
-            if role_to_give is not None:
-                for user in mentioned_users:
-                    member = server.get_member(user.id)
-                    if member is not None:
-                        try:
-                            await member.add_roles(role_to_give)
-                            print(f'Gave role to {member} for being mentioned.')
-                            # Add the checkmark emoji ✅
-                            await message.add_reaction('✅')
-                        except discord.Forbidden:
-                            print(f"Failed to give role to {member}. Missing Permissions.")
-                            # Add the X emoji ❌
-                            await message.add_reaction('❌')
-                        except discord.HTTPException:
-                            print(f"Failed to give role to {member}. HTTP Exception.")
-                            # Add the X emoji ❌
-                            await message.add_reaction('❌')
+    text = message.content.strip().lower()  # Get the message content in lowercase
+
+    # Replace 'YOUR_SERVER_ID' and 'YOUR_ROLE_ID' with your actual values
+    server = bot.get_guild(YOUR_SERVER_ID)
+    role_to_give = discord.utils.get(server.roles, id=YOUR_ROLE_ID)
+
+    if text in [member.name.lower() for member in server.members]:
+        member = discord.utils.get(server.members, name=text)
+        if member is not None:
+            try:
+                await member.add_roles(role_to_give)
+                print(f'Gave role to {member.name} for being mentioned.')
+                # Add the checkmark emoji ✅
+                await message.add_reaction('✅')
+            except discord.Forbidden:
+                print(f"Failed to give role to {member.name}. Missing Permissions.")
+                # Add the X emoji ❌
+                await message.add_reaction('❌')
+            except discord.HTTPException:
+                print(f"Failed to give role to {member.name}. HTTP Exception.")
+                # Add the X emoji ❌
+                await message.add_reaction('❌')
 
     await bot.process_commands(message)  # Process other commands if any
 
 # Replace 'YOUR_SERVER_ID' with the actual ID of your server
-YOUR_SERVER_ID = 1234567890
+YOUR_SERVER_ID = 1129980317021782189
 
 # Replace 'YOUR_ROLE_ID' with the actual ID of the role you want to give
-YOUR_ROLE_ID = 9876543210
+YOUR_ROLE_ID = 1129994537067094106
 
 # Replace 'YOUR_CHANNEL_ID' with the actual ID of the channel you want the bot to listen to
-YOUR_CHANNEL_ID = 1234567890
+YOUR_CHANNEL_ID = 1130030562694942760
 
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-bot.run('YOUR_BOT_TOKEN')
+bot.run('MTEzMzk1ODY5NjY3ODk4MTY2NQ.G_K73Z.GSufUMaVLM8jBgoBWJcMNbYOEy4MohcLg6E4Eg')
