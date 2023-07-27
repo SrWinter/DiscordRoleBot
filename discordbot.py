@@ -50,13 +50,13 @@ async def on_message(message):
     await bot.process_commands(message)  # Process other commands if any
 
 # Replace 'YOUR_SERVER_ID' with the actual ID of your server
-YOUR_SERVER_ID = 1129980317021782189
+YOUR_SERVER_ID = 112998032189
 
 # Replace 'YOUR_ROLE_ID' with the actual ID of the role you want to give
-YOUR_ROLE_ID = 1129994537067094106
+YOUR_ROLE_ID = 11299945306
 
 # Replace 'YOUR_CHANNEL_ID' with the actual ID of the channel you want the bot to listen to
-YOUR_CHANNEL_ID = 1130030562694942760
+YOUR_CHANNEL_ID = 11300305620
 
 # Replace 'YOUR_BOT_TOKEN' with your actual bot token
-bot.run('MTEzMzk1ODY5NjY3ODk4MTY2NQ.G_K73Z.GSufUMaVLM8jBgoBWJcMNbYOEy4MohcLg6E4Eg')
+bot.run('YOUR_BOT_TOKEN')
